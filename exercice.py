@@ -3,6 +3,7 @@
 
 
 # TODO: Importez vos modules ici
+import cmath
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import quad
@@ -12,7 +13,7 @@ def linear_values() -> np.ndarray:
 
 
 def coordinate_conversion(cartesian_coordinates: np.ndarray) -> np.ndarray:
-    return np.array([(np.sqrt(c[0]**2+c[1]**2), np.arctan2(c[1],c[0])) for c in cartesian_coordinates ])
+    return np.array([cmath.polar(complex(c[0],c[1])) for c in cartesian_coordinates ])
 
 
 def find_closest_index(values: np.ndarray, number: float) -> int:
@@ -22,14 +23,14 @@ def creer_graphe():
     x=np.linspace(-1,1, num=250)
     y=x ** 2 * np.sin(1 / x ** 2) + x
     
-    plt.scatter(x, y)
     plt.title("Graphe")
     plt.xlabel('x')
     plt.ylabel('y')
+    plt.plot(x,y)
     plt.show()
     
 
-def Monte_Carlo(itt=5000):
+def Monte_Carlo(itt=50000):
     x_inside=[]
     y_inside=[]
     x_outside=[]
@@ -66,15 +67,21 @@ def Integrale():
     plt.ylabel('y')
     plt.plot(x,y)
     plt.show()
+    
     return resultat
      
     
 if __name__ == '__main__':
     # TODO: Appelez vos fonctions ici
     print('les valeurs sont : ', linear_values())
+    
     coordonee=np.array([(0, 0), (10, 10), (2, -1)])
     print(f'les coordonnées cartésiennes {coordonee} en coordonnées polaires {coordinate_conversion(coordonee)}')
+    
     print(find_closest_index(np.array([1, 3, 8, 10]), 9.5))
+    
     creer_graphe()
+    
     Monte_Carlo()
+    
     print(Integrale())
